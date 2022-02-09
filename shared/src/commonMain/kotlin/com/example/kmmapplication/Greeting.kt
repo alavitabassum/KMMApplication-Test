@@ -1,5 +1,6 @@
 package com.example.kmmapplication
 
+import com.squareup.sqldelight.db.SqlDriver
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.get
