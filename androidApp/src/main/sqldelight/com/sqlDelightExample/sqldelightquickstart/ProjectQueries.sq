@@ -1,0 +1,22 @@
+CREATE TABLE Users(
+userId INTEGER NOT NULL UNIQUE PRIMARY KEY,
+fullName TEXT NOT NULL,
+password TEXT NOT NULL DEFAULT 0
+);
+
+selectAll:
+SELECT *
+FROM Users;
+
+insertOrReplace:
+INSERT OR REPLACE INTO Users(
+userId,
+fullName,
+password
+)
+VALUES(?,?,?);
+
+selectByLabel:
+SELECT *
+FROM Users
+WHERE userId - ?;

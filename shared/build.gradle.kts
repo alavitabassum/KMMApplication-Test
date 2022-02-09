@@ -2,9 +2,16 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.example.kmmapplication"
+    }
+}
 
 kotlin {
     android()
@@ -16,6 +23,7 @@ kotlin {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
+
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "shared"
@@ -29,6 +37,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                implementation("com.squareup.sqldelight:runtime:1.5.3")
             }
         }
         val commonTest by getting {
@@ -40,6 +49,7 @@ kotlin {
         val androidMain by getting{
             dependencies{
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:1.5.3")
             }
         }
         val androidTest by getting {
@@ -51,9 +61,15 @@ kotlin {
         val iosX64Main by getting{
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:1.5.3")
             }
         }
-        val iosArm64Main by getting
+        val iosArm64Main by getting{
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:1.5.3")
+            }
+        }
         //val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
